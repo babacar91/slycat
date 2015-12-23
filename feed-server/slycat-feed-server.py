@@ -26,6 +26,9 @@ parser = ConfigParser.SafeConfigParser()
 parser.read(config_path)
 configuration = {section : {key : eval(value) for key, value in parser.items(section)} for section in parser.sections()}
 
+## Logging configuration
+
+# Access log configuration
 access_log = logging.getLogger("access")
 access_log.propagate = False
 access_log.setLevel(logging.INFO)
@@ -34,9 +37,12 @@ if configuration["slycat-feed-server"]["access-log"] == "-":
 else:
   access_log.addHandler(logging.handlers.RotatingFileHandler(configuration["slycat-feed-server"]["access-log"], maxBytes=configuration["slycat-feed-server"]["access-log-size"], backupCount=configuration["slycat-feed-server"]["access-log-count"]))
 
+# Error log configuration
 error_log = logging.getLogger("error")
 error_log.propagate = False
 error_log.setLevel(logging.INFO)
+
+# Set log destination and format
 if configuration["slycat-feed-server"]["error-log"] == "-":
   error_log.addHandler(logging.StreamHandler(sys.stderr))
 else:

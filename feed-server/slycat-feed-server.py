@@ -47,7 +47,7 @@ if configuration["slycat-feed-server"]["error-log"] == "-":
   error_log.addHandler(logging.StreamHandler(sys.stderr))
 else:
   error_log.addHandler(logging.handlers.RotatingFileHandler(configuration["slycat-feed-server"]["error-log"], maxBytes=configuration["slycat-feed-server"]["error-log-size"], backupCount=configuration["slycat-feed-server"]["error-log-count"]))
-error_log.handlers[-1].setFormatter(logging.Formatter(fmt="%(asctime)s  %(message)s", datefmt="[%d/%b/%Y:%H:%M:%S]"))
+error_log.handlers[-1].setFormatter(logging.Formatter(fmt="%(asctime)s - %(levelname)s - %(message)s", datefmt="[%d/%b/%Y:%H:%M:%S]"))
 
 class log(object):
   access = logging.getLogger("access").info
